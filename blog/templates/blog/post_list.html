@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% for post in posts %}
+    <article class="post">
+      <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+      <p class="meta">
+        {{ post.author.get_username }} &middot;
+        <time datetime="{{ post.published_date|date:'c' }}">{{ post.published_date|date:"N j, Y" }}</time>
+      </p>
+      <p>{{ post.text|truncatewords:50|linebreaksbr }}</p>
+    </article>
+  {% empty %}
+    <p class="empty">No posts yet.</p>
+  {% endfor %}
+
+  {% if is_paginated %}
+    <nav class="pagination" aria-label="Pagination">
+      {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">&larr; Newer</a>{% endif %}
+      <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+      {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">Older &rarr;</a>{% endif %}
+    </nav>
+  {% endif %}
+{% endblock %}

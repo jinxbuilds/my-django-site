@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} · My Django Site{% endblock %}
+
+{% block content %}
+  <article class="post">
+    <h1>{{ post.title }}</h1>
+    <p class="meta">
+      {{ post.author.get_username }} &middot;
+      <time datetime="{{ post.published_date|date:'c' }}">{{ post.published_date|date:"N j, Y" }}</time>
+    </p>
+    <div class="body">{{ post.text|linebreaks }}</div>
+  </article>
+  <p><a href="{% url 'blog:post_list' %}">&larr; All posts</a></p>
+{% endblock %}
